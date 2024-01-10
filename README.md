@@ -1,7 +1,8 @@
 Hello! Welcome to the NotesDemo Application.
 
 ## Description
-This application is built using Java Spring Boot technology and MySQL. It allows you to perform basic CRUD operations.
+
+This application is a REST API built using Java Spring Boot technology and MySQL. It allows you to perform basic CRUD operations.
 
 ## Features
 - Create a new note
