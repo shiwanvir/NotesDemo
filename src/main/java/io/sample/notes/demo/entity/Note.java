@@ -22,22 +22,27 @@ public class Note {
 		return id;
 	}
 
+	// set id
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	// get id
 	public String getTitle() {
 		return title;
 	}
 
+	// set title
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	// get description
 	public String getDescription() {
 		return description;
 	}
 
+	// set description
 	public void setDescription(String description) {
 		this.description = description;
 	}

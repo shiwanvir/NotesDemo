@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NotesDemoApplication {
 
 	public static void main(String[] args) {
+		//this will initiate spring boot application
 		SpringApplication.run(NotesDemoApplication.class, args);
 	}
 
