@@ -20,15 +20,20 @@ public class NoteService {
 	// save single note in to database
 	public CustomResponse<Note> saveNote(Note note) {
 		try {
-			// save note object using JPA
-			Note savedNote = noteRepository.save(note);
-			// check saved status
-			if (savedNote != null) {
-				// if saving successful return the Response with saved object and HTTP status
-				return new CustomResponse<>(savedNote, "Note saved sucessfully", HttpStatus.CREATED.value());
+			// check NoteisValid object
+			if (isValidNoteObject(note)) {
+
+				Note savedNote = noteRepository.save(note);
+				// check saved status
+				if (savedNote != null) {
+					// if saving successful return the Response with saved object and HTTP status
+					return new CustomResponse<>(savedNote, "Note saved sucessfully", HttpStatus.CREATED.value());
+				} else {
+					// if saving failed return the Response with saved object and HTTP status
+					return new CustomResponse<>(null, "Faild to create note", HttpStatus.INTERNAL_SERVER_ERROR.value());
+				}
 			} else {
-				// if saving failed return the Response with saved object and HTTP status
-				return new CustomResponse<>(null, "Faild to create note", HttpStatus.INTERNAL_SERVER_ERROR.value());
+				return new CustomResponse<>(null, "Invalid Note object", HttpStatus.BAD_REQUEST.value());
 			}
 		} catch (Exception e) {
 			// Handle any unexpected exceptions that might occur during the save process
@@ -84,23 +89,27 @@ public class NoteService {
 
 	public CustomResponse<Note> updateNote(Note note) {
 		try {
-			// check if note is available in the database
-			if (noteRepository.existsById(note.getId())) {
-				// if note is available assign it to note object
-				Note exsistingNote = noteRepository.findById(note.getId()).orElse(null);
-				// update note object with new values
-				exsistingNote.setTitle(note.getTitle());
-				exsistingNote.setDescription(note.getDescription());
-				// save updated object in to database
-				Note updatedNote = noteRepository.save(exsistingNote);
-				// return response with updated object and HTTP status
-				return new CustomResponse<>(updatedNote, "Note updated sucessfully", HttpStatus.OK.value());
+			// check NoteisValid object
+			if (isValidNoteObject(note)) {
+				// check if note is available in the database
+				if (noteRepository.existsById(note.getId())) {
+					// if note is available assign it to note object
+					Note exsistingNote = noteRepository.findById(note.getId()).orElse(null);
 
+					exsistingNote.setTitle(note.getTitle());
+					exsistingNote.setDescription(note.getDescription());
+					// save updated object in to database
+					Note updatedNote = noteRepository.save(exsistingNote);
+					// return response with updated object and HTTP status
+					return new CustomResponse<>(updatedNote, "Note updated sucessfully", HttpStatus.OK.value());
+
+				} else {
+					// if note is not found return empty object with HTTP status
+					return new CustomResponse<>(null, "Note not found for updating", HttpStatus.NOT_FOUND.value());
+				}
 			} else {
-				// if note is not found return empty object with HTTP status
-				return new CustomResponse<>(null, "Note not found for updating", HttpStatus.NOT_FOUND.value());
+				return new CustomResponse<>(null, "Invalid Note object", HttpStatus.BAD_REQUEST.value());
 			}
-
 		}
 
 		catch (Exception e) {
@@ -134,6 +143,17 @@ public class NoteService {
 					HttpStatus.INTERNAL_SERVER_ERROR.value());
 
 		}
+	}
+
+	// this will perform server side validation
+	public boolean isValidNoteObject(Note note) {
+		// check mandatory field values are empty
+		if (note.getTitle().isEmpty() || note.getDescription().isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 
 }
