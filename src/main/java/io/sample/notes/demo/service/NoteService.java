@@ -53,7 +53,7 @@ public class NoteService {
 				return new CustomResponse<>(allNotes, "Notes retrived sucessfully", HttpStatus.OK.value());
 			} else {
 				// if list is empty return null with HTTP status
-				return new CustomResponse<>(null, "No notes found", HttpStatus.NOT_FOUND.value());
+				return new CustomResponse<>(allNotes, "No notes found", HttpStatus.OK.value());
 			}
 		} catch (Exception e) {
 			// Handle any unexpected exceptions that might occur during the retrieving

@@ -20,15 +20,15 @@ public class CustomResponse<T> {
 		this.statusCode = statusCode;
 	}
 	 
-	//get generic data
+
 	public T getData() {
 		return data;
 	}
-	//get response message
+
 	public String getMessage() {
 		return message;
 	}
-	//get response status
+	
 	public int getStatusCode() {
 		return statusCode;
 	}
