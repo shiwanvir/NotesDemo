@@ -52,7 +52,7 @@ public class NoteService {
 				// if note list is not empty return list of notes with HTTP status
 				return new CustomResponse<>(allNotes, "Notes retrived sucessfully", HttpStatus.OK.value());
 			} else {
-				// if list is empty return null with HTTP status
+				// if list is empty return empty array with HTTP status
 				return new CustomResponse<>(allNotes, "No notes found", HttpStatus.OK.value());
 			}
 		} catch (Exception e) {
